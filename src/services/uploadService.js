@@ -1,6 +1,6 @@
 const fs = require("fs");
 const fastCsv = require("fast-csv");
-const Data = require("../models/uploadModel");
+const Data = require("../models/dataModel");
 
 const processCsv = async (filePath) => {
   const dataToInsert = [];
