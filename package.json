@@ -1,7 +1,8 @@
 {
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "node server.js",
+    "sonar": "sonarqube-scanner"
   },
   "dependencies": {
     "curl": "^0.1.4",

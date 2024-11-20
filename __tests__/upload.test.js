@@ -1,9 +1,31 @@
+require("dotenv").config();
 const request = require("supertest");
 const app = require("../src/app");
 const sequelize = require("../src/config/dbConfig");
+const mysql = require("mysql2/promise");
+
+const initDatabase = async () => {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+    });
+    await connection.query(
+      `CREATE DATABASE IF NOT EXISTS ${process.env.TEST_DB_NAME}`
+    );
+    console.log("Banco de dados criado com sucesso!");
+    await connection.end();
+  } catch (error) {
+    console.error("Erro ao criar o banco de dados:", error.message);
+    throw error;
+  }
+};
 
 beforeAll(async () => {
   try {
+    await initDatabase();
+
     await sequelize.authenticate();
     console.log("Conexão bem-sucedida!");
     await sequelize.sync({ force: true });
